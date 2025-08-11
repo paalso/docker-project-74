@@ -7,3 +7,5 @@ tmp/
 temp/
 .env
 *.sqlite
+.npm
+.cache
