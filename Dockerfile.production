@@ -1,0 +1,22 @@
+# Dockerfile.production
+
+# Production (and test) Dockerfile.
+# Installs dependencies, copies the source code into the image,
+# builds the production-ready app, and starts it.
+# Used in docker-compose.yml without the override file.
+
+FROM node:20.12.2
+
+WORKDIR /app
+
+COPY app/package.json .
+COPY app/package-lock.json .
+RUN npm ci
+
+COPY app/ .
+
+EXPOSE 8080
+ENV NODE_ENV=production
+
+RUN make build
+CMD make start

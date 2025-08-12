@@ -1,0 +1,16 @@
+# docker-compose.override.yml
+
+# Development overrides for docker-compose.yml.
+# Changes the Dockerfile to the dev version, mounts local source code,
+# and sets the command to start the app in development mode.
+# Automatically applied when running `docker compose up` without the -f flag.
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app # mounts local source code
+    image: paalso/docker-project-74:dev
+    command: make dev

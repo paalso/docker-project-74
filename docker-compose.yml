@@ -1,10 +1,15 @@
+# docker-compose.yml
+
+# Base configuration for production and tests.
+# Builds from Dockerfile.production and includes only what's needed to run the app.
+# No volumes here — the code is copied into the image during build.
+
 services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.production
     ports:
       - "8080:8080"
-    volumes:
-      - "./app:/app"
+    image: paalso/docker-project-74
     command: make test
