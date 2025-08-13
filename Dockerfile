@@ -17,4 +17,4 @@ COPY app/ .
 ENV FASTIFY_ADDRESS 0.0.0.0
 EXPOSE 8080
 
-CMD make dev
+CMD ["make", "dev"]
