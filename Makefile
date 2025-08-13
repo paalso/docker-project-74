@@ -13,13 +13,13 @@ help: ## Show this help message
 	@echo
 
 build:	## Build the production image (Dockerfile.production)
-	docker compose -f docker-compose.yml build app
+	docker compose --file docker-compose.yml build app
 
 prod:	## Run the production server (no override)
-	docker compose -f docker-compose.yml up
+	docker compose --file docker-compose.yml up
 
 ci:	## Run tests in CI mode using production config (stops on first failure)
-	docker compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
+	docker compose --file docker-compose.yml up --abort-on-container-exit --exit-code-from app
 
 dev:	## Run the development server with override (hot-reload)
 	docker compose up
