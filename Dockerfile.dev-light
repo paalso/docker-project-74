@@ -1,3 +1,6 @@
+# TODO
+# Implement light-weight version of the image using lighter node
+
 FROM node:20-alpine
 
 RUN apk add --no-cache bash make python3 g++ 

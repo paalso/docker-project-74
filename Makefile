@@ -12,16 +12,18 @@ help: ## Show this help message
 	| awk 'BEGIN {FS = ":.*## "}; {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
 	@echo
 
-build:	## Build the production image (Dockerfile.production)
+build: ## Build the production image (Dockerfile.production)
 	docker compose --file docker-compose.yml build app
 
-# prod:	## Run the production server (no override)
-# 	docker compose --file docker-compose.yml up
+prod: ## Run the production server
+	sed 's/make test/make start/' docker-compose.yml > tmp-docker-compose.prod.yml
+	trap 'rm -f tmp-docker-compose.prod.yml' EXIT; \
+	docker compose --profile prod --file tmp-docker-compose.prod.yml up --build --abort-on-container-exit --exit-code-from app
 
 ci:	## Run tests in CI mode using production config (stops on first failure)
 	docker compose --file docker-compose.yml up --abort-on-container-exit --exit-code-from app
 
-dev:	## Run the development server with override (hot-reload)
+dev: ## Run the development server with override (hot-reload)
 	docker compose up
 
 run-dev-direct:	## Run development mode directly with docker run (bypassing docker compose)
