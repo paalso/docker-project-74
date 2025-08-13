@@ -15,8 +15,8 @@ help: ## Show this help message
 build:	## Build the production image (Dockerfile.production)
 	docker compose --file docker-compose.yml build app
 
-prod:	## Run the production server (no override)
-	docker compose --file docker-compose.yml up
+# prod:	## Run the production server (no override)
+# 	docker compose --file docker-compose.yml up
 
 ci:	## Run tests in CI mode using production config (stops on first failure)
 	docker compose --file docker-compose.yml up --abort-on-container-exit --exit-code-from app
