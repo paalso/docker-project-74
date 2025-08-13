@@ -1,0 +1,15 @@
+localhost {
+  log {
+    format json
+  }
+
+  # Enable compression using Zstandard (reduces traffic size)
+  encode zstd
+
+  # Use an internal (self-signed) TLS certificate for HTTPS
+  tls internal
+
+  # Forward all incoming requests to the "app" service on port 8080
+  # ("app" is the service name from docker-compose.yml)
+  reverse_proxy /* app:8080
+}

@@ -14,3 +14,14 @@ services:
       - ./app:/app # mounts local source code
     image: paalso/docker-project-74:dev
     command: make dev
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    ports:
+      - "80:80" # HTTP
+      - "443:443" # HTTPS
+    volumes:
+      - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - app
