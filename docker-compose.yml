@@ -5,8 +5,6 @@
 # No volumes here — the code is copied into the image during build.
 
 # docker-compose.yml
-version: "3.9"
-
 services:
   app:
     build:

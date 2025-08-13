@@ -25,6 +25,12 @@ jobs:
 
       # 3. Runs project tests inside the CI environment
       - name: Check (run tests)
+        env:
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: make ci
 
       # 4. Logs in to Docker Hub using secrets stored in the GitHub repository settings.
