@@ -13,21 +13,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # 1. Checks out the repository code from the current branch
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. Sets up Docker Buildx — an extended build tool for Docker
+      #    enabling advanced features like caching, multi-platform builds,
+      #    and more efficient image creation.
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # 3. Runs project tests inside the CI environment
       - name: Check (run tests)
         run: make ci
 
+      # 4. Logs in to Docker Hub using secrets stored in the GitHub repository settings.
+      #    These secrets must be configured beforehand:
+      #    - DOCKER_USERNAME: Your Docker Hub username
+      #    - DOCKER_PASSWORD: Your Docker Hub Personal Access Token (recommended over password)
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      # 5. Builds and pushes the Docker image to Docker Hub.
+      #    - Uses caching to speed up subsequent builds.
+      #    - Pushes the image with the "latest" tag.
+      #    - Uses Dockerfile.production for the build.
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
@@ -35,3 +48,5 @@ jobs:
           file: Dockerfile.production
           push: true
           tags: ${{ env.APP_IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.APP_IMAGE_NAME }}
+          cache-to: type=inline
