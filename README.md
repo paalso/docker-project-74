@@ -13,22 +13,26 @@
 
 ### Общая схема
 ```
-                           ┌─────────────────────────┐
-                           │ docker-compose.yml      │
-                           │ (prod/test, base config)│
-                           └────────────┬────────────┘
-                                        │
-                   ┌────────────────────┴───────────────────────┐
-                   │                                            │
-     ┌─────────────▼──────────────┐                ┌─────────────▼───────────────┐
-     │   docker-compose.yml       │                │ docker-compose.override.yml │
-     │   (prod/test)              │                │ (dev overrides)             │
-     └─────────────┬──────────────┘                └─────────────┬───────────────┘
-                   │                                             │
-        ┌──────────▼────────────┐                       ┌─────────▼────────────┐
-        │ Dockerfile.production │                       │ Dockerfile (dev)     │
-        │ build, prod optim.    │                       │ hot-reload, volumes  │
-        └───────────────────────┘                       └──────────────────────┘
+          ┌─────────────────────┐
+          │ docker-compose.yml  │
+          │ (base config)       │
+          └─────────┬───────────┘
+                    │
+      ┌─────────────▼─────────────┐
+      │ Dockerfile.production     │
+      │ (prod/test build)         │
+      └───────────────────────────┘
+
+override applied automatically:
+      ┌─────────────────────────────┐
+      │ docker-compose.override.yml │
+      │ (dev overrides)             │
+      └─────────┬───────────────────┘
+                │
+         ┌──────▼───────────┐
+         │ Dockerfile (dev) │
+         │ hot-reload, vol. │
+         └──────────────────┘
 ```
 
 ### Docker / Compose конфигурация
